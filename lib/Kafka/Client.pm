@@ -83,7 +83,7 @@ sub send {
     $partition ||= 0;
     $messages    = [ $messages ] if not ref $messages;
 
-    $self->socket->send( encode_produce_request( $topic, $partition, $messages ) );
+    $self->socket->send( $self->encode_produce_request( $topic, $partition, $messages ) );
 }
 
 =head2 encode_message
@@ -115,7 +115,7 @@ sub encode_message {
 sub encode_produce_request {
     my ( $self, $topic, $partition, $messages ) = @_;
     my $message_set = join('', map {
-        my $encoded = encode_message($_);
+        my $encoded = $self->encode_message($_);
         pack('i>', length($encoded)) . $encoded;
     } @$messages);
 
