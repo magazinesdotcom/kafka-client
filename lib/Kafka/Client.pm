@@ -8,6 +8,12 @@ use IO::Socket;
 
 Kafka::Client - Client for LinkedIn's Kafka
 
+=head1 WARNING
+
+This module is almost completely untested, save that it actually gets messages
+to send to Kafka. It cannot consume and might set things on fire. It might not
+be encoded correctly. Patches are welcome!!!
+
 =head1 DESCRIPTION
 
 Kafka::Client is a client for LinkedIn's <Kafka|http://sna-projects.com/kafka/>.
@@ -16,10 +22,12 @@ kafka source code.
 
 =head1 SYNOPSIS
 
-  my $kafka = Kafka::Client->new( host => '10.1.3.156' );
+  use Kafka::Client;
+
+  my $kafka = Kafka::Client->new( host => '127.0.0.1' );
 
   my @messages = ( 'One', 'Two', 'Three' );
-  my $topic   = 'test';
+  my $topic = 'test';
 
   $kafka->send( \@messages, $topic );
 
@@ -126,3 +134,24 @@ sub encode_produce_request {
     return pack('i>', length($data)) . $data;
 }
 
+=head1 AUTHOR
+
+Cory G Watson, C<< <gphat at cpan.org> >>
+
+=head1 CONTRIBUTORS
+
+J. Shirley
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2011 Magazines.com, LLC
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+
+See http://dev.perl.org/licenses/ for more information.
+
+=cut
+
+1;
