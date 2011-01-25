@@ -90,8 +90,7 @@ sub send {
     my ( $self, $messages, $topic, $partition ) = @_;
     $partition ||= 0;
     $messages    = [ $messages ] if not ref $messages;
-
-    $self->socket->send( $self->encode_produce_request( $topic, $partition, $messages ) );
+    $self->_socket->send( $self->encode_produce_request( $topic, $partition, $messages ) );
 }
 
 =head2 encode_message
